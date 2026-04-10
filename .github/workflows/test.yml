@@ -35,7 +35,7 @@ jobs:
         env:
           ZENDRIVER_TEST_BROWSERS: "headless"
           ZENDRIVER_TEST_NO_SANDBOX: "true"
-          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          CHROME_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
         shell: bash
         run: ./scripts/test.sh
       - name: Upload coverage to Codecov
