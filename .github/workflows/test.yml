@@ -16,9 +16,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+      - name: Install Chrome 145
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable=145.0.3638.69-1
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            # Download Chrome 145 for Windows
+            curl -L -o chrome_installer.exe "https://dl.google.com/chrome/install/145.0.3638.69/chrome_installer.exe"
+            ./chrome_installer.exe /silent /install
+          fi
       - name: Install uv
         uses: astral-sh/setup-uv@v3
       - name: Set up Python
