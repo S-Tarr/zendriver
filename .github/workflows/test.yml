@@ -23,6 +23,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: 145
+        id: setup-chrome
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
@@ -34,6 +35,7 @@ jobs:
         env:
           ZENDRIVER_TEST_BROWSERS: "headless"
           ZENDRIVER_TEST_NO_SANDBOX: "true"
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         shell: bash
         run: ./scripts/test.sh
       - name: Upload coverage to Codecov
