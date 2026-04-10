@@ -19,19 +19,10 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
-      - name: Install Chrome 145 (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          wget -q "https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_145.0.7360.0-1_amd64.deb" -O chrome.deb
-          sudo apt-get install -y ./chrome.deb
-
-      - name: Install Chrome 145 (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $url = "https://dl.google.com/chrome/install/145.0.7360.0/chrome_installer.exe"
-          Invoke-WebRequest -Uri $url -OutFile chrome_installer.exe
-          Start-Process -FilePath chrome_installer.exe -Args "/silent /install" -Wait
+      - name: Install Chrome 145
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 145
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
