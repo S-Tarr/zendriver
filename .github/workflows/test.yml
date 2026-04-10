@@ -22,7 +22,7 @@ jobs:
       - name: Install Chrome 145
         uses: browser-actions/setup-chrome@v2
         with:
-          chrome-version: 145
+          chrome-version: 144
         id: setup-chrome
 
       - name: Install uv
